@@ -2,10 +2,15 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
+import java.util.List;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -15,6 +20,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +32,7 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
 
 //        Map params = new HashMap<>();
 //        params.put("category", productCategoryDataStore.find(1));
@@ -33,24 +41,59 @@ public class ProductController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
+        List<Product> filteredProductsByCategory = new ArrayList<>();
+
         int categoryId;
         String categoryIdString = req.getParameter("categories");
         if (categoryIdString == "all" || categoryIdString == null){
             //IF ALL SELECTED (OR DEFAULT)
             context.setVariable("category", productCategoryDataStore.find(1));
-            context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+            filteredProductsByCategory = productDataStore.getAll();
         } else {
             //IF CATEGORY SELECTED
             try {
                 categoryId = Integer.parseInt(req.getParameter("categories"));
                 ProductCategory selectedCategory = productCategoryDataStore.find(categoryId);
                 context.setVariable("category", selectedCategory);
-                context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(categoryId)));
+                filteredProductsByCategory = productDataStore.getBy(selectedCategory);
             }
             catch (Exception e){
                 System.err.println(e);
             }
         }
+
+        List<Product> filteredProductsBySupplier = new ArrayList<>();
+
+        int supplierId;
+        String supplierIdString = req.getParameter("suppliers");
+        if (supplierIdString == "all" || supplierIdString == null){
+            context.setVariable("supplier", productSupplierDataStore.find(1));
+            filteredProductsByCategory = productDataStore.getAll();
+        } else {
+            try {
+                supplierId = Integer.parseInt(req.getParameter("suppliers"));
+                Supplier selectedSupplier = productSupplierDataStore.find(supplierId);
+                context.setVariable("supplier", selectedSupplier);
+                filteredProductsBySupplier = productDataStore.getBy(selectedSupplier);
+            } catch (Exception e){
+                System.err.println(e);
+            }
+        }
+
+        List<Product> filteredProductsByAll = new ArrayList<>();
+        try {
+            for (Product product: filteredProductsByCategory){
+                System.out.println(product);
+                if (filteredProductsBySupplier.contains(product)){
+                    filteredProductsByAll.add(product);
+                }
+            }
+        } catch (Exception e){
+            System.err.println(e);
+        }
+
+        context.setVariable("products", filteredProductsByAll);
+        context.setVariable("suppliers", productSupplierDataStore.getAll());
         context.setVariable("categories", productCategoryDataStore.getAll());
         engine.process("product/index.html", context, resp.getWriter());
     }
