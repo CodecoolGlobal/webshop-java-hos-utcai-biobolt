@@ -42,15 +42,6 @@ public class ProductController extends HttpServlet {
 
 
 
-        String addId =  req.getParameter("product_id");
-        if (req.getParameter("product_id") != null) {
-           // context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(Integer.parseInt(addId))));
-            cartDaoDataStore.addProductToShoppingCart(Integer.parseInt(addId));
-        } else  if(req.getParameter("remove_id")!= null){
-
-        }
-
-
     }
 
 }
