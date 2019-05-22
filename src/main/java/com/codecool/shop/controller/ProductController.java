@@ -45,20 +45,22 @@ public class ProductController extends HttpServlet {
 
         int categoryId;
         String categoryIdString = req.getParameter("categories");
-        if (categoryIdString == "all" || categoryIdString == null){
+        if (categoryIdString == null)
+            categoryIdString = "all";
+        if (categoryIdString.equals("all")){
             //IF ALL SELECTED (OR DEFAULT)
-            context.setVariable("category", productCategoryDataStore.find(1));
+            context.setVariable("categoryName", "all");
             filteredProductsByCategory = productDataStore.getAll();
         } else {
             //IF CATEGORY SELECTED
             try {
                 categoryId = Integer.parseInt(req.getParameter("categories"));
                 ProductCategory selectedCategory = productCategoryDataStore.find(categoryId);
-                context.setVariable("category", selectedCategory);
+                context.setVariable("categoryName", selectedCategory.getName());
                 filteredProductsByCategory = productDataStore.getBy(selectedCategory);
             }
             catch (Exception e){
-                System.err.println(e);
+                System.err.println("asd1");
             }
         }
 
@@ -66,24 +68,27 @@ public class ProductController extends HttpServlet {
 
         int supplierId;
         String supplierIdString = req.getParameter("suppliers");
-        if (supplierIdString == "all" || supplierIdString == null){
-            context.setVariable("supplier", productSupplierDataStore.find(1));
-            filteredProductsByCategory = productDataStore.getAll();
+        if (supplierIdString == null)
+            supplierIdString = "all";
+        if (supplierIdString.equals("all")){
+            context.setVariable("supplierName", "all");
+            filteredProductsBySupplier = productDataStore.getAll();
         } else {
+
             try {
                 supplierId = Integer.parseInt(req.getParameter("suppliers"));
                 Supplier selectedSupplier = productSupplierDataStore.find(supplierId);
-                context.setVariable("supplier", selectedSupplier);
+                context.setVariable("supplierName", selectedSupplier.getName());
                 filteredProductsBySupplier = productDataStore.getBy(selectedSupplier);
             } catch (Exception e){
-                System.err.println(e);
+                System.err.println(supplierIdString);
+                System.err.println("asd2");
             }
         }
 
         List<Product> filteredProductsByAll = new ArrayList<>();
         try {
             for (Product product: filteredProductsByCategory){
-                System.out.println(product);
                 if (filteredProductsBySupplier.contains(product)){
                     filteredProductsByAll.add(product);
                 }
