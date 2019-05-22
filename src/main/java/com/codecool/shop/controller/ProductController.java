@@ -39,8 +39,6 @@ public class ProductController extends HttpServlet {
         SupplierDao productSupplierDataStore = SupplierDaoMem.getInstance();
 
         Map params = new HashMap<>();
-        params.put("category", productCategoryDataStore.find( 1));
-        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -62,6 +60,8 @@ public class ProductController extends HttpServlet {
                 ProductCategory selectedCategory = productCategoryDataStore.find(categoryId);
                 context.setVariable("categoryName", selectedCategory.getName());
                 filteredProductsByCategory = productDataStore.getBy(selectedCategory);
+                params.put("category", productCategoryDataStore.find(categoryId));
+                params.put("products", productDataStore.getBy(productCategoryDataStore.find(categoryId)));
             }
             catch (Exception e){
                 System.err.println("asd1");
