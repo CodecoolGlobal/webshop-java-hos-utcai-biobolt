@@ -4,10 +4,12 @@ import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.model.Product;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 public class CartDaoMem implements CartDao {
 
-    private HashMap<Product, Integer> cartData = new HashMap<>();
+    private HashMap<Product, Integer> cartData = new LinkedHashMap<>();
     private static CartDaoMem instance = null;
 
     private CartDaoMem(){
@@ -24,28 +26,41 @@ public class CartDaoMem implements CartDao {
     @Override
     public void addOneProduct(Product product) {
         if (cartData.containsKey(product)){
-            cartData.put(product, +1);
+            cartData.put(product, cartData.get(product)+1);
+        } else {
+            cartData.put(product, 1);
         }
 
     }
 
     @Override
     public void removeOneProduct(Product product) {
-
+        if (cartData.get(product) > 0) {
+            cartData.put(product, cartData.get(product) - 1);
+        } else {
+            this.removeAllProduct(product);
+        }
     }
 
     @Override
     public void removeAllProduct(Product product) {
-
+        cartData.remove(product);
     }
 
     @Override
     public void emptyCart() {
-
+        for (Product product : cartData.keySet()) {
+            cartData.remove(product);
+        }
     }
 
     @Override
     public HashMap<Product, Integer> getAll() {
-        return null;
+//        Iterator it = cartData.entrySet().iterator();
+//        while (it.hasNext()){
+//            Map.Entry pair = (Map.Entry)
+//        }
+        return cartData;
+        // TODO: 2019.05.22. implement getAll
     }
 }
