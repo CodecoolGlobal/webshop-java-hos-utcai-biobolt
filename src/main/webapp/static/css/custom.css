@@ -68,10 +68,12 @@ h1{
 
 .text-center{
     background-color: darkgreen;
+    padding: 0px;
 }
 
 body{
     background-color: darkgoldenrod;
+    background-image: url("../img/background-herostreet.jpg");
 }
 
 .card-header{
