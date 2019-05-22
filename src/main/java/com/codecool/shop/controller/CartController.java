@@ -41,10 +41,15 @@ public class CartController extends HttpServlet {
         String removeOneProduct = req.getParameter("removeOneProduct");
 
         if (addOneProduct != null){
-
+            cartDataStore.addOneProduct(addOneProduct);
+            addOneProduct = null;
+        }
+        if (removeOneProduct !=null){
+            cartDataStore.removeOneProduct(removeOneProduct);
+            removeOneProduct = null;
         }
 
-        resp.sendRedirect("/");
+        resp.sendRedirect("/cart");
     }
 
 

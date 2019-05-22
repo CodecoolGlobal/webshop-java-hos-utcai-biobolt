@@ -40,12 +40,13 @@ public class CartDaoMem implements CartDao {
     @Override
     public void removeOneProduct(String productName) {
         for (Product key : cartData.keySet()) {
-//            if (cartData.get(product) == 1) {
-//                cartData.remove(product);
-//            }
             if (productName.equals(key.getName())) {
-                cartData.put(key, cartData.get(key) - 1);
+                if (cartData.get(key) <=1 ){
+                    cartData.remove(key);
+                } else { cartData.put(key, cartData.get(key) - 1);}
+
             }
+
         }
     }
 
@@ -56,15 +57,21 @@ public class CartDaoMem implements CartDao {
     }
 
     @Override
+    public void addProductToShoppingCart(Integer id) {
+        Product product = productDataStore.find(id);
+        cartData.put(product, 1);
+    }
+
+    @Override
     public HashMap<Product, Integer> getAll() {
         return cartData;
     }
 
 
-    public void addProductToShoppingCart(int productId){
-        addOneProduct(productDataStore.find(productId));
-
-    }
+//    public void addProductToShoppingCart(int productId){
+//        addOneProduct(productDataStore.find(productId));
+//
+//    }
 
     @Override
     public int getSize() {
