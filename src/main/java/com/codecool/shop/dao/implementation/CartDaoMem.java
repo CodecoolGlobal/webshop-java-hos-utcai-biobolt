@@ -44,9 +44,8 @@ public class CartDaoMem implements CartDao {
                 if (cartData.get(key) <=1 ){
                     cartData.remove(key);
                 } else { cartData.put(key, cartData.get(key) - 1);}
-
+                // TODO: 2019.05.22. sometimes  deleting the last one from the item gives an error
             }
-
         }
     }
 
