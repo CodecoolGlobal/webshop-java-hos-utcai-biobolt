@@ -41,7 +41,18 @@
 
 <div class="container">
     <div class="card">
-        <strong th:text="${category.name}">Category Title</strong>
+        <strong th:text="${categoryName}">Category Title</strong>
+        <form action="/" method="GET" name="filter">
+            <select name="categories">
+                <option value="all">Categories</option>
+                <option th:each="categ : ${categories}" th:value="${categ.getId()}" th:text="${categ.getName()}"></option>
+            </select>
+            <select name="suppliers">
+                <option value="all">Suppliers</option>
+                <option th:each="supplier : ${suppliers}" th:value="${supplier.getId()}" th:text="${supplier.getName()}"></option>
+            </select>
+            <input type="submit" value="Filter">
+        </form>
     </div>
 
     <div id="products" class="row">
