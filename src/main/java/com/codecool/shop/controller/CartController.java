@@ -25,7 +25,9 @@ public class CartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        resp.setCharacterEncoding("UTF-8");
+//        Map params = new HashMap<>();
+//        params.put("category", productCategoryDataStore.find(1));
+//        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());

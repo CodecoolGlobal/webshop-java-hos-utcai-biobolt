@@ -1,6 +1,7 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.CartDao;
+import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 
@@ -9,6 +10,8 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 public class CartDaoMem implements CartDao {
+
+    ProductDao productDataStore = ProductDaoMem.getInstance();
 
     private HashMap<Product, Integer> cartData = new LinkedHashMap<>();
     private static CartDaoMem instance = null;
@@ -56,4 +59,17 @@ public class CartDaoMem implements CartDao {
     public HashMap<Product, Integer> getAll() {
         return cartData;
     }
+
+
+    public void addProductToShoppingCart(int productId){
+        addOneProduct(productDataStore.find(productId));
+
+    }
+
+    @Override
+    public int getSize() {
+        return cartData.size();
+    }
+
+
 }

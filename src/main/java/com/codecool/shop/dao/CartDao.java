@@ -12,7 +12,8 @@ public interface CartDao {
     void addOneProduct(String string);
     void removeOneProduct(String string);
     void emptyCart();
-
+    void addProductToShoppingCart(int i);
+    int getSize();
     HashMap<Product, Integer> getAll();
 }
 
