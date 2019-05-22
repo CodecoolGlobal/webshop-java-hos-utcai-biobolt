@@ -1,7 +1,9 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
@@ -17,12 +19,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
+        CartDao cartDaoDataStore = CartDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
 
 //        Map params = new HashMap<>();
@@ -37,6 +41,14 @@ public class ProductController extends HttpServlet {
 
 
 
+
+        String addId =  req.getParameter("product_id");
+        if (req.getParameter("product_id") != null) {
+           // context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(Integer.parseInt(addId))));
+            cartDaoDataStore.addProductToShoppingCart(Integer.parseInt(addId));
+        } else  if(req.getParameter("remove_id")!= null){
+
+        }
 
 
     }
