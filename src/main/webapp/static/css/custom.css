@@ -73,9 +73,19 @@ h1{
 
 body{
     background-color: darkgoldenrod;
-    background-image: url("../img/background-herostreet.jpg");
+    background-image: url("../img/background-herostreet2.jpg");
+    background-position-y: 170px;
 }
 
 .card-header{
     min-height: 140px;
+}
+
+.btn-success{
+    font-family: Rock Salt, cursive;
+}
+
+.category-name{
+    background-color: #66ab9a;
+    padding: 10px;
 }
