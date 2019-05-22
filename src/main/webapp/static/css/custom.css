@@ -62,5 +62,18 @@
 }
 
 h1{
-    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+.text-center{
+    background-color: darkgreen;
+}
+
+body{
+    background-color: darkgoldenrod;
+}
+
+.card-header{
+    min-height: 140px;
 }
