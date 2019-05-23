@@ -61,7 +61,6 @@ public class ProductController extends HttpServlet {
                 context.setVariable("categoryName", selectedCategory.getName());
                 filteredProductsByCategory = productDataStore.getBy(selectedCategory);
                 params.put("category", productCategoryDataStore.find(categoryId));
-                params.put("products", productDataStore.getBy(productCategoryDataStore.find(categoryId)));
             }
             catch (Exception e){
                 System.err.println("asd1");
@@ -104,6 +103,7 @@ public class ProductController extends HttpServlet {
         context.setVariable("products", filteredProductsByAll);
         context.setVariable("suppliers", productSupplierDataStore.getAll());
         context.setVariable("categories", productCategoryDataStore.getAll());
+        context.setVariable("numberofcartitem", cartDaoDataStore.getSize());
         context.setVariables(params);
         engine.process("product/index.html", context, resp.getWriter());
 

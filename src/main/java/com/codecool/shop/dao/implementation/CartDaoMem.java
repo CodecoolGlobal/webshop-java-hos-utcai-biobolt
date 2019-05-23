@@ -41,9 +41,11 @@ public class CartDaoMem implements CartDao {
     public void removeOneProduct(String productName) {
         for (Product key : cartData.keySet()) {
             if (productName.equals(key.getName())) {
-                if (cartData.get(key) <=1 ){
+                if (cartData.get(key) <= 0) {
                     cartData.remove(key);
-                } else { cartData.put(key, cartData.get(key) - 1);}
+                } else {
+                    cartData.put(key, cartData.get(key) - 1);
+                }
                 // TODO: 2019.05.22. sometimes  deleting the last one from the item gives an error
             }
         }
@@ -67,15 +69,10 @@ public class CartDaoMem implements CartDao {
     }
 
 
-//    public void addProductToShoppingCart(int productId){
-//        addOneProduct(productDataStore.find(productId));
-//
-//    }
-
     @Override
     public int getSize() {
         return cartData.size();
     }
-
-
 }
+
+
