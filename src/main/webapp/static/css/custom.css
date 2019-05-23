@@ -67,14 +67,17 @@ h1{
 }
 
 .text-center{
-    background-color: darkgreen;
+    background-color: rgba(0, 0, 0, 0.78);
     padding: 0px;
 }
 
 body{
-    background-color: darkgoldenrod;
+    background-color: rgba(0, 0, 0, 0.78);
     background-image: url("../img/background-herostreet2.jpg");
+    background-position: center;
     background-position-y: 170px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .card-header{
@@ -96,4 +99,9 @@ body{
     background: none;
     color: white;
 
+}
+
+.prod-image{
+    height: 250px;
+    width: 348px;
 }
