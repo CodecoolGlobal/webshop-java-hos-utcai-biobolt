@@ -92,11 +92,7 @@ public class CartDaoMem implements CartDao {
 
     @Override
     public float getTotalPrice() {
-        float sum = 0;
-        for (Map.Entry<Product, Integer> entry : cartData.entrySet()) {
-            sum += entry.getKey().getDefaultPrice();
-        }
-        return sum;
+        return cartData.keySet().stream().map(key -> key.getDefaultPrice() * cartData.get(key)).reduce((float) 0, (x, y) -> x + y);
     }
 }
 

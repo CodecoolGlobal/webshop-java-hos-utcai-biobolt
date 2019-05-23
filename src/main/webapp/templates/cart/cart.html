@@ -46,6 +46,7 @@
 
 <div class="container">
     <div class="card">
+        <h3>My Cart</h3>
         <table>
             <thead class="col col-sm-12 col-md-6 col-lg-4">
             <th>Product</th>
@@ -66,9 +67,12 @@
                             th:value="${prod.key.getName()}"></button>
                 </form>
             </td>
-
             </tbody>
         </table>
+
+        <div class="card">
+            <h3> The total price is: <span th:text="${TotalPrice}">total price </span></h3>
+        </div>
     </div>
 </div>
 </body>
