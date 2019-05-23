@@ -43,7 +43,7 @@
 
 <div th:replace="navbar.html :: nav"></div>
 <div class="jumbotron text-center">
-    <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='static/img/newheader2.jpg'" alt="" />
+    <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='static/img/newheader2.jpg'" alt=""/>
 </div>
 <div class="container">
     <div class="card">
@@ -53,10 +53,12 @@
             <th>Quantity</th>
             <th>Total price</th>
             </thead>
-            <tbody class="col col-sm-12 col-md-6 col-lg-4" th:each="prod : ${cardData}" >
+            <tbody class="col col-sm-12 col-md-6 col-lg-4" th:each="prod : ${cardData}">
             <td th:text="${prod.key.getName()}">Product name</td>
             <td th:text="${prod.value}">Quantity</td>
-            <td th:text="${prod.value}">Total price</td>
+            <td th:with="result=${prod.key.getDefaultPrice() * prod.value}">
+                <span th:text="${result}">Total price</span>
+            </td>
             <td>
                 <form action="/cart" method="post">
                     <button class="fas fa-angle-up" type="submit" name="addOneProduct"
@@ -65,13 +67,10 @@
                             th:value="${prod.key.getName()}"></button>
                 </form>
             </td>
+
             </tbody>
         </table>
     </div>
-
 </div>
-
-
 </body>
-
 </html>
