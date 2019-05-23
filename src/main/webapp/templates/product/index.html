@@ -43,7 +43,6 @@
 
 <div class="container">
     <div class="card">
-        <strong th:text="${categoryName}">Category Title</strong>
         <form action="/" method="GET" name="filter">
             <select name="categories">
                 <option value="all">Categories</option>
@@ -56,7 +55,7 @@
             <input type="submit" value="Filter">
         </form>
     <div class="card category-name">
-        <strong th:text="${category.name}">Category Title</strong>
+        <strong th:text="${categoryName}">Category Title</strong>
     </div>
 
     <div id="products" class="row">
