@@ -45,15 +45,16 @@
 <div th:replace="header.html :: copy"></div>
 
 <div class="container">
-    <div class="card">
+    <div class="shopping-cart">
         <h3>My Cart</h3>
         <table>
             <thead class="col col-sm-12 col-md-6 col-lg-4">
             <th>Product</th>
+            <th>Name</th>
             <th>Quantity</th>
             <th>Total price</th>
             </thead>
-            <tbody class="col col-sm-12 col-md-6 col-lg-4" th:each="prod : ${cardData}">
+            <tbody class="col col-sm-12 col-md-6 col-lg-4 price" th:each="prod : ${cardData}">
             <td><img class="prod-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.key.getId()} + '.jpg'" alt="" /></td>
             <td th:text="${prod.key.getName()}">Product name</td>
             <td th:text="${prod.value}">Quantity</td>
@@ -72,7 +73,8 @@
         </table>
 
         <div class="card">
-            <h3> The total price is: <span th:text="${TotalPrice}">total price </span></h3>
+            <br>
+            <p class="totalprice"> The total price is: <span th:text="${TotalPrice}">total price </span></p>
         </div>
     </div>
 </div>
