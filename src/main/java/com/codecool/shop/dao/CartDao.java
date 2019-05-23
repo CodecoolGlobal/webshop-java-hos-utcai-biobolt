@@ -13,7 +13,7 @@ public interface CartDao {
     void removeOneProduct(String string);
     void emptyCart();
     void addProductToShoppingCart(Integer id);
-    int getSize();
+    int getCarDataSize();
     float getTotalPrice();
     HashMap<Product, Integer> getAll();
 }
