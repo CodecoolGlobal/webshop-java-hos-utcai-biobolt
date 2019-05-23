@@ -67,15 +67,13 @@ h1{
 }
 
 .text-center{
-    background-color: rgba(0, 0, 0, 0.78);
+    background: transparent;
     padding: 0px;
 }
 
 body{
-    background-color: rgba(0, 0, 0, 0.78);
     background-image: url("../img/background-herostreet2.jpg");
-    background-position: center;
-    background-position-y: 170px;
+    background-position: top;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
