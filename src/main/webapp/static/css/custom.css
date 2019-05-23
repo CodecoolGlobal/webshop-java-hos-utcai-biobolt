@@ -151,4 +151,10 @@ body{
     flex-direction: column;
 }
 
+.totalprice {
+    font-size: 30px;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+
+}
+
 
