@@ -54,7 +54,8 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Technokol Rapid", 6, "USD", "Multi-purpose tool for gluing and blooming.", reform, littleJohnny));
         productDataStore.add(new Product("The neighbours grass", 1, "USD", "It's always greener than yours.", starterPack, ilcsiNeni));
         productDataStore.add(new Product("Glandula Pinealis", 675, "USD", "Real delicacy, straight from your brain cells", natural, escobar));
-
-
+        productDataStore.add(new Product("Lighter Fluid", 8, "USD", "Light up the party!", reform, littleJohnny));
+        productDataStore.add(new Product("Acetone", 8, "USD", "Beauty and pain goes hand in hand... Ease your constraint with some floral scented acetone.", reform, ilcsiNeni));
+        productDataStore.add(new Product("Kalumet", 345, "USD", "You'll feel like the children of nature after a few sips from this tribal beauty", starterPack, escobar));
     }
 }
