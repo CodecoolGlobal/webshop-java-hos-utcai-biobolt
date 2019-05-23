@@ -5,9 +5,11 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 
+import javax.print.DocFlavor;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class CartDaoMem implements CartDao {
 
@@ -72,6 +74,15 @@ public class CartDaoMem implements CartDao {
     @Override
     public int getSize() {
         return cartData.size();
+    }
+
+    @Override
+    public float getTotalPrice() {
+        float sum = 0;
+        for (Map.Entry<Product, Integer> entry : cartData.entrySet()) {
+            sum += entry.getKey().getDefaultPrice();
+        }
+        return sum;
     }
 }
 

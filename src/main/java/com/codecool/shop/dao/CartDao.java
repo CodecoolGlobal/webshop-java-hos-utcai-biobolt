@@ -14,6 +14,7 @@ public interface CartDao {
     void emptyCart();
     void addProductToShoppingCart(Integer id);
     int getSize();
+    float getTotalPrice();
     HashMap<Product, Integer> getAll();
 }
 
