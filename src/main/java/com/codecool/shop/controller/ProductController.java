@@ -51,7 +51,7 @@ public class ProductController extends HttpServlet {
             categoryIdString = "all";
         if (categoryIdString.equals("all")){
             //IF ALL SELECTED (OR DEFAULT)
-            context.setVariable("categoryName", "all");
+            context.setVariable("categoryName", "All products");
             filteredProductsByCategory = productDataStore.getAll();
         } else {
             //IF CATEGORY SELECTED

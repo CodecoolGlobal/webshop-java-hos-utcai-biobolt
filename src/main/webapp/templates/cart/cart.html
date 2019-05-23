@@ -5,7 +5,7 @@
     <meta name="author" content="Codecool"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-    <title>Codecool Shop</title>
+    <title>Hero Street BioShop</title>
 
     <!-- Bootstrap components -->
     <!-- Latest compiled and minified Jquery -->
@@ -48,14 +48,15 @@
     <div class="shopping-cart">
         <h3 class="h3-cart">My Cart</h3>
         <table>
-            <thead class="col col-sm-12 col-md-6 col-lg-4 card-header">
+            <thead class="col col-sm-12 col-md-6 col-lg-4 card-header" style="text-align: center">
             <th>Product</th>
             <th>Name</th>
             <th>Quantity</th>
             <th>Total price</th>
+            <th></th>
             </thead>
-            <tbody class="col col-sm-12 col-md-6 col-lg-4 price card-body" th:each="prod : ${cardData}">
-            <td><img class="prod-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.key.getId()} + '.jpg'" alt="" /></td>
+            <tbody class="col col-sm-12 col-md-6 col-lg-4 price card-body" th:each="prod : ${cardData}" style="text-align: center">
+            <td><img class="prod-image cart-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.key.getId()} + '.jpg'" alt="" /></td>
             <td th:text="${prod.key.getName()}">Product name</td>
             <td th:text="${prod.value}">Quantity</td>
             <td th:with="result=${prod.key.getDefaultPrice() * prod.value}">

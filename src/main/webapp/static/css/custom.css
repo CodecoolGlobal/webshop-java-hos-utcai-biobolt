@@ -77,11 +77,19 @@ body{
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100%;
+    overflow-x: hidden;
 }
 
 .card-header{
-    min-height: 140px;
+    height: 125px;
+    overflow: hidden;
+
 }
+
+.prod-card{
+    margin-bottom: 20px;
+}
+
 
 .btn-success{
     font-family: Rock Salt, cursive;
@@ -101,8 +109,14 @@ body{
 }
 
 .prod-image{
-    height: 250px;
-    width: 348px;
+    height: 100%;
+    width: 100%;
+}
+
+.cart-image{
+    height: 130px;
+    width: auto;
+    alignment: center;
 }
 
 .bg-light {
@@ -150,6 +164,12 @@ body{
 
     display: flex;
     flex-direction: column;
+    padding: 20px;
+}
+
+.main-card{
+    padding: 20px;
+    background-color: #fff9;
 }
 
 .totalprice {
@@ -172,4 +192,5 @@ table{
     background-color: #b1e852;
     margin-bottom: 10px;
     border-radius: .2em;
+    text-align: center;
 }
