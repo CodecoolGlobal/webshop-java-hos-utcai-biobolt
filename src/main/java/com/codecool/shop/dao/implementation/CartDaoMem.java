@@ -39,16 +39,25 @@ public class CartDaoMem implements CartDao {
         }
     }
 
+
+//    for (Iterator<String> iterator = list.iterator(); iterator.hasNext(); ) {
+//        String value = iterator.next();
+//        if (value.length() > 5) {
+//            iterator.remove();
+//        }
+//    }
+
+
     @Override
     public void removeOneProduct(String productName) {
-        for (Product key : cartData.keySet()) {
-            if (productName.equals(key.getName())) {
-                if (cartData.get(key) <= 0) {
-                    cartData.remove(key);
+        for (Iterator<Product> iterator = cartData.keySet().iterator(); iterator.hasNext();){
+            Product product = iterator.next();
+            if (productName.equals(product.getName())) {
+                if (cartData.get(product) <= 1) {
+                    iterator.remove();
                 } else {
-                    cartData.put(key, cartData.get(key) - 1);
+                    cartData.put(product, cartData.get(product) - 1);
                 }
-                // TODO: 2019.05.22. sometimes  deleting the last one from the item gives an error
             }
         }
     }
@@ -62,8 +71,13 @@ public class CartDaoMem implements CartDao {
     @Override
     public void addProductToShoppingCart(Integer id) {
         Product product = productDataStore.find(id);
-        cartData.put(product, 1);
+        if (cartData.containsKey(product)) {
+            cartData.put(product, cartData.get(product) + 1);
+        } else {
+            cartData.put(product, 1);
+        }
     }
+
 
     @Override
     public HashMap<Product, Integer> getAll() {
