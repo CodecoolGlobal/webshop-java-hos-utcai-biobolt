@@ -76,6 +76,7 @@ body{
     background-position: top;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    background-size: 100%;
 }
 
 .card-header{
@@ -154,7 +155,21 @@ body{
 .totalprice {
     font-size: 30px;
     font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    text-align: right;
+    padding-right: 10px;
 
 }
 
+#container{
+    width: 100%;
+}
 
+table{
+    width: 100%;
+}
+
+.h3-cart{
+    background-color: #b1e852;
+    margin-bottom: 10px;
+    border-radius: .2em;
+}
