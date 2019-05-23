@@ -60,3 +60,72 @@
 {
     margin: 0 0 11px;
 }
+
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+.text-center{
+    background: transparent;
+    padding: 0px;
+}
+
+body{
+    background-image: url("../img/background-herostreet2.jpg");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.card-header{
+    min-height: 140px;
+}
+
+.btn-success{
+    font-family: Rock Salt, cursive;
+    background-color: rgba(0, 0, 0, 0.68);
+}
+
+.category-name{
+    background-color: #b1e852;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.footer{
+    background: none;
+    color: white;
+
+}
+
+.prod-image{
+    height: 250px;
+    width: 348px;
+}
+
+.bg-light {
+    background-color: #1f2b3899 !important;
+}
+
+.navbar-brand, .nav-link, .fa-shopping-cart{
+    color:white;
+}
+
+.navbar-light .navbar-brand {
+
+    color: white;}
+
+.navbar-light .navbar-nav .active > .nav-link{
+    color: white;
+}
+
+.navbar{
+    position: fixed;
+    width: 100%;
+}
+
+.header{
+    position: relative;
+
+}

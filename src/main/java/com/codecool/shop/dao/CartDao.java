@@ -9,12 +9,12 @@ import java.util.List;
 
 public interface CartDao {
 
-    void addOneProduct(Product product);
-    void removeOneProduct(Product product);
-    void removeAllProduct(Product product);
+    void addOneProduct(String string);
+    void removeOneProduct(String string);
     void emptyCart();
-    void addProductToShoppingCart(int i);
+    void addProductToShoppingCart(Integer id);
     int getSize();
+    float getTotalPrice();
     HashMap<Product, Integer> getAll();
 }
 

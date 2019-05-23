@@ -1,10 +1,13 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -17,11 +20,10 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {
+    private CartDao cartDataStore = CartDaoMem.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
 
 //        Map params = new HashMap<>();
 //        params.put("category", productCategoryDataStore.find(1));
@@ -29,15 +31,30 @@ public class CartController extends HttpServlet {
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("category", productCategoryDataStore.find(1));
-        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        context.setVariable("cardData", cartDataStore.getAll());
+        context.setVariable("TotalPrice", cartDataStore.getTotalPrice());
         engine.process("cart/cart.html", context, resp.getWriter());
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String addOneProduct = req.getParameter("addOneProduct");
+        String removeOneProduct = req.getParameter("removeOneProduct");
+
+        if (addOneProduct != null){
+            cartDataStore.addOneProduct(addOneProduct);
+            addOneProduct = null;
+        }
+        if (removeOneProduct !=null){
+            cartDataStore.removeOneProduct(removeOneProduct);
+            removeOneProduct = null;
+        }
+
+        resp.sendRedirect("/cart");
     }
 
 
 
 
-
-
-
 }
+

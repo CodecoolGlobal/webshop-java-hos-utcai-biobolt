@@ -3,10 +3,13 @@ package com.codecool.shop.dao.implementation;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ProductCategory;
 
+import javax.print.DocFlavor;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class CartDaoMem implements CartDao {
 
@@ -15,10 +18,11 @@ public class CartDaoMem implements CartDao {
     private HashMap<Product, Integer> cartData = new LinkedHashMap<>();
     private static CartDaoMem instance = null;
 
-    private CartDaoMem(){
+
+    private CartDaoMem() {
     }
 
-    public static CartDaoMem getInstance(){
+    public static CartDaoMem getInstance() {
         if (instance == null) {
             instance = new CartDaoMem();
         }
@@ -27,56 +31,59 @@ public class CartDaoMem implements CartDao {
 
 
     @Override
-    public void addOneProduct(Product product) {
-        if (cartData.containsKey(product)){
-            cartData.put(product, cartData.get(product)+1);
-        } else {
-            cartData.put(product, 1);
-        }
-
-    }
-
-    @Override
-    public void removeOneProduct(Product product) {
-        if (cartData.get(product) > 0) {
-            cartData.put(product, cartData.get(product) - 1);
-        } else {
-            this.removeAllProduct(product);
+    public void addOneProduct(String productName) {
+        for (Product key : cartData.keySet()) {
+            if (productName.equals(key.getName())) {
+                cartData.put(key, cartData.get(key) + 1);
+            }
         }
     }
 
     @Override
-    public void removeAllProduct(Product product) {
-        cartData.remove(product);
+    public void removeOneProduct(String productName) {
+        for (Product key : cartData.keySet()) {
+            if (productName.equals(key.getName())) {
+                if (cartData.get(key) <= 0) {
+                    cartData.remove(key);
+                } else {
+                    cartData.put(key, cartData.get(key) - 1);
+                }
+                // TODO: 2019.05.22. sometimes  deleting the last one from the item gives an error
+            }
+        }
     }
+
 
     @Override
     public void emptyCart() {
-        for (Product product : cartData.keySet()) {
-            cartData.remove(product);
-        }
+        cartData.clear();
+    }
+
+    @Override
+    public void addProductToShoppingCart(Integer id) {
+        Product product = productDataStore.find(id);
+        cartData.put(product, 1);
     }
 
     @Override
     public HashMap<Product, Integer> getAll() {
-//        Iterator it = cartData.entrySet().iterator();
-//        while (it.hasNext()){
-//            Map.Entry pair = (Map.Entry)
-//        }
         return cartData;
-        // TODO: 2019.05.22. implement getAll
     }
 
-
-    public void addProductToShoppingCart(int productId){
-        addOneProduct(productDataStore.find(productId));
-
-    }
 
     @Override
     public int getSize() {
         return cartData.size();
     }
 
-
+    @Override
+    public float getTotalPrice() {
+        float sum = 0;
+        for (Map.Entry<Product, Integer> entry : cartData.entrySet()) {
+            sum += entry.getKey().getDefaultPrice();
+        }
+        return sum;
+    }
 }
+
+
