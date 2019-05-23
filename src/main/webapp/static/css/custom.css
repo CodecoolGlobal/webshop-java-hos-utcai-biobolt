@@ -88,7 +88,7 @@ body{
 }
 
 .category-name{
-    background-color: #66ab9a;
+    background-color: #b1e852;
     padding: 10px;
     margin-bottom: 5px;
 }
@@ -104,3 +104,28 @@ body{
     width: 348px;
 }
 
+.bg-light {
+    background-color: #1f2b3899 !important;
+}
+
+.navbar-brand, .nav-link, .fa-shopping-cart{
+    color:white;
+}
+
+.navbar-light .navbar-brand {
+
+    color: white;}
+
+.navbar-light .navbar-nav .active > .nav-link{
+    color: white;
+}
+
+.navbar{
+    position: fixed;
+    width: 100%;
+}
+
+.header{
+    position: relative;
+
+}
