@@ -1,14 +1,100 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Codecool Shop</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+
+</head>
+
+
 <body>
 
-<div th:fragment="copy">
-    <div class="card">
-        <div class="card-body">
-            &copy; 2016 Codecool Budapest
-        </div>
-    </div>
+<div class="jumbotron text-center">
+    <h1>Codecool Shop</h1>
 </div>
+
+<div class="card">
+    <table>
+        <thead  class="col col-sm-12 col-md-6 col-lg-4">
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Total price</th>
+        </thead>
+        <tbody  th:each="prod : ${cardData}">
+        <td th:text="${prod.key.getName()}">Product name</td>
+        <td th:text="${prod.value}">Quantity</td>
+        <td th:text="${prod.value}">Total price</td>
+        <td>
+            <form action="/cart" method="post">
+                <button class="fas fa-angle-up" type="submit" name="addOneProduct"
+                        th:value="${prod.key.getName()}"></button>
+                <button class="fas fa-angle-down" type="submit" name="removeOneProduct"
+                        th:value="${prod.key.getName()}"></button>
+            </form>
+        </td>
+        </tbody>
+    </table>
+
+
+    <!--        <th class="col col-sm-12 col-md-6 col-lg-4" th:each="prod : ${cardData}">-->
+    <!--            <table>-->
+    <!--                <tr class="card">-->
+    <!--                    <img class="" src="http://placehold.it/400x250/000/fff"-->
+    <!--                         th:attr="src='/static/img/product_' + ${prod.key.id} + '.jpg'" alt=""/>-->
+    <!--                    <td class="card-header">-->
+    <!--                        <h4 class="card-title" th:text="${prod.key.getName()}">Product name</h4>-->
+    <!--                    </td>-->
+    <!--                    <td class="card-body">-->
+    <!--                        <div class="card-text">-->
+    <!--                            <p class="lead" th:text="${prod.value}">100 USD</p>-->
+    <!--                        </div>-->
+    <!--                        <div class="card-text">-->
+    <!--                            <form action="/cart" method="post">-->
+    <!--                                <button class="btn btn-success"  type="submit" name="addOneProduct" th:value="${prod.key.getId()}" ><i class="fas fa-shopping-cart"></i></button>-->
+    <!--                            </form>-->
+    <!--                            <form action="/cart" method="post">-->
+    <!--                                <button class="btn btn-success"  type="submit" name="removeOneProduct" th:value="${prod.key.getId()}" ><i class="fas fa-shopping-cart"></i></button>-->
+    <!--                            </form>-->
+    <!--                        </div>-->
+    <!--                    </td>-->
+    <!--                </tr>-->
+    <!--            </table>-->
+    <!--        </th>-->
+</div>
+
+
+<div th:replace="footer.html :: copy"></div>
 
 </body>
 </html>
