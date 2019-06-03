@@ -1,59 +1,41 @@
 package com.codecool.shop.config;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+/**
+ * Created by ani on 2016.11.13..
+ */
 public class DBConnection {
-    // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "com.postgresql.jdbc.Driver";
-    static final String DB_URL = "jdbc:postgresql://localhost/";
 
-    //  Database credentials
-    static final String USER = "username";
-    static final String PASS = "password";
+    private static final String DATABASE = System.getenv("DATABASE");
+    private static final String DB_USER = System.getenv("DB_USER");
+    private static final String DB_PASSWORD = System.getenv("DB_PASSWORD");
 
 
     public DBConnection() {
-        setConnection();
     }
 
-    public void setConnection() {
-        Connection conn = null;
-        Statement stmt = null;
-        try{
-            //STEP 2: Register JDBC driver
-            Class.forName("com.postgresql.jdbc.Driver");
 
-            //STEP 3: Open a connection
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+    private Connection getConnection() throws SQLException {
+        System.out.println(DB_PASSWORD);
+        return DriverManager.getConnection(
+                DATABASE,
+                DB_USER,
+                DB_PASSWORD);
+    }
 
-            //STEP 4: Execute a query
-            System.out.println("Creating database...");
-            stmt = conn.createStatement();
+    private void executeQuery(String query) {
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement();
+        ) {
+            statement.execute(query);
 
-            String sql = "CREATE DATABASE STUDENTS";
-            stmt.executeUpdate(sql);
-            System.out.println("Database created successfully...");
-        }catch(SQLException se){
-            //Handle errors for JDBC
-            se.printStackTrace();
-        }catch(Exception e){
-            //Handle errors for Class.forName
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally{
-            //finally block used to close resources
-            try{
-                if(stmt!=null)
-                    stmt.close();
-            }catch(SQLException se2){
-            }// nothing we can do
-            try{
-                if(conn!=null)
-                    conn.close();
-            }catch(SQLException se){
-                se.printStackTrace();
-            }//end finally try
-        }//end try
-        System.out.println("Goodbye!");
-    }//end main
+        }
+    }
+
 }
