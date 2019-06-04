@@ -8,27 +8,25 @@ import java.sql.Statement;
 /**
  * Created by ani on 2016.11.13..
  */
-public class DBConnection {
+public class DBConnection implements DBDao{
 
-
-    protected static final String DATABASE = "jdbc:postgresql://173.212.197.253:54331/tejfi";
-    protected static final String DB_USER = "postgres";
-    protected static final String DB_PASSWORD = "37bca414725fa71189323a0c24018c35";
-
-
-    private static DBConnection instance = null;
+    private static DBConnection INSTANCE;
+    private String info = "Initial info class";
 
     private DBConnection() {
     }
 
     public static DBConnection getInstance() {
-        if (instance == null) {
-            instance = new DBConnection();
+        if(INSTANCE == null) {
+            INSTANCE = new DBConnection();
         }
-        return instance;
+
+        return INSTANCE;
     }
 
-
+    protected static final String DATABASE = "jdbc:postgresql://173.212.197.253:54331/tejfi";
+    protected static final String DB_USER = "postgres";
+    protected static final String DB_PASSWORD = "37bca414725fa71189323a0c24018c35";
 
 
     public Connection getConnection() throws SQLException {

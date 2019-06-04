@@ -4,10 +4,7 @@ import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.CartDaoMem;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -15,6 +12,7 @@ import com.codecool.shop.model.Supplier;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.sql.SQLException;
 
 @WebListener
 public class Initializer implements ServletContextListener {
@@ -27,13 +25,27 @@ public class Initializer implements ServletContextListener {
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
         CartDao cartDao = CartDaoMem.getInstance();
 
+        SupplierDaoDB supplierDaoDB = new SupplierDaoDB();
+
         //setting up a new supplier
         Supplier escobar = new Supplier("Pablo Escobar", "Old but gold products, from El Doctor");
-        supplierDataStore.add(escobar);
+        try {
+            supplierDataStore.add(escobar);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Supplier littleJohnny = new Supplier("Little Johnny", "Low prices at the expense of quality");
-        supplierDataStore.add(littleJohnny);
+        try {
+            supplierDataStore.add(littleJohnny);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Supplier ilcsiNeni = new Supplier("Ilcsi néni", "Natural & Organic!");
-        supplierDataStore.add(ilcsiNeni);
+        try {
+            supplierDataStore.add(ilcsiNeni);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         //setting up a new product category
         ProductCategory reform = new ProductCategory("Reform substances", "Supplements", "New kinds of ");
