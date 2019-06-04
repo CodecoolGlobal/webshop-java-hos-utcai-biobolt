@@ -10,13 +10,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CartDaoMem implements CartDao {
-
-    ProductDao productDataStore = ProductDaoMem.getInstance();
-
-    private HashMap<Product, Integer> cartData = new LinkedHashMap<>();
     private static CartDaoMem instance = null;
-   // public static long count = 0;
-
+    ProductDao productDataStore = ProductDaoMem.getInstance();
+    private HashMap<Product, Integer> cartData = new LinkedHashMap<>();
 
     private CartDaoMem() {
     }
@@ -27,9 +23,7 @@ public class CartDaoMem implements CartDao {
         }
         return instance;
     }
-
-
-
+    // public static long count = 0;
 
     @Override
     public void addOneProduct(String productName) {
@@ -51,7 +45,7 @@ public class CartDaoMem implements CartDao {
 
     @Override
     public void removeOneProduct(String productName) {
-        for (Iterator<Product> iterator = cartData.keySet().iterator(); iterator.hasNext();){
+        for (Iterator<Product> iterator = cartData.keySet().iterator(); iterator.hasNext(); ) {
             Product product = iterator.next();
             if (productName.equals(product.getName())) {
                 if (cartData.get(product) <= 1) {
@@ -93,7 +87,7 @@ public class CartDaoMem implements CartDao {
         for (Integer value : cartData.values()) {
             count += value;
         }
-       return count;
+        return count;
 
     }
 

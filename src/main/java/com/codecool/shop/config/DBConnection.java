@@ -15,15 +15,23 @@ public class DBConnection {
     protected static final String DB_USER = "postgres";
     protected static final String DB_PASSWORD = "37bca414725fa71189323a0c24018c35";
 
-    public void add() {
 
-        Integer id = 1;
-        String querry = "INSERT INTO supplier (name, description) VALUES ('TEST', 'YEET')";
-        executeQuery(querry);
+    private static DBConnection instance = null;
+
+    private DBConnection() {
+    }
+
+    public static DBConnection getInstance() {
+        if (instance == null) {
+            instance = new DBConnection();
+        }
+        return instance;
     }
 
 
-    private Connection getConnection() throws SQLException {
+
+
+    public Connection getConnection() throws SQLException {
         System.out.println(DB_PASSWORD);
         return DriverManager.getConnection(
                 DATABASE,
@@ -31,7 +39,7 @@ public class DBConnection {
                 DB_PASSWORD);
     }
 
-    private void executeQuery(String query) {
+    public void executeQuery(String query) {
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
         ) {
