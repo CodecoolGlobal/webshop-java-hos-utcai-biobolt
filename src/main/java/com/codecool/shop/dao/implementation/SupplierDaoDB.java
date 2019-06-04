@@ -5,6 +5,7 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
 import com.codecool.shop.config.DBConnection;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierDaoDB implements SupplierDao {
@@ -13,7 +14,14 @@ public class SupplierDaoDB implements SupplierDao {
 
     @Override
     public void add(Supplier supplier) {
-
+        String query = "INSERT INTO supplier (name, description) VALUES ('"+ supplier.getName() +"', '"+ supplier.getDescription() +"');";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -36,11 +44,36 @@ public class SupplierDaoDB implements SupplierDao {
 
     @Override
     public void remove(int id) {
-
+        String query = "DELETE FROM supplier WHERE id = '"+ id +"';";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public List<Supplier> getAll() {
-        return null;
+        String query = "SELECT * FROM supplier";
+
+        List<Supplier> resultList = new ArrayList<>();
+
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             Statement statement =connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+        ){
+            while (resultSet.next()){
+                Supplier supplier = new Supplier(resultSet.getString("name"),
+                        resultSet.getString("description"));
+                resultList.add(supplier);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultList;
     }
 }
