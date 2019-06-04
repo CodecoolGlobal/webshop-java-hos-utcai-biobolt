@@ -10,12 +10,16 @@ import java.sql.Statement;
  */
 public class DBConnection {
 
-    private static final String DATABASE = System.getenv("DATABASE");
-    private static final String DB_USER = System.getenv("DB_USER");
-    private static final String DB_PASSWORD = System.getenv("DB_PASSWORD");
 
+    protected static final String DATABASE = "jdbc:postgresql://173.212.197.253:54331/tejfi";
+    protected static final String DB_USER = "postgres";
+    protected static final String DB_PASSWORD = "37bca414725fa71189323a0c24018c35";
 
-    public DBConnection() {
+    public void add() {
+
+        Integer id = 1;
+        String querry = "INSERT INTO supplier (name, description) VALUES ('TEST', 'YEET')";
+        executeQuery(querry);
     }
 
 
