@@ -8,22 +8,25 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 public class ProductDaoDB implements ProductDao {
     DBDao db = DBConnection.getInstance();
+    ProductCategoryDB productCategoryDB;
+    SupplierDaoDB supplierDaoDB;
     Product product;
 
     @Override
     public void add(Product product) {
         String query = "INSERT INTO products (name, defaultprice, currencystring, description, categoryid, supplierid) " +
-                "VALUES ('"+ product.getName() +"', '"+
-                product.getDefaultPrice() +"', '" +
-                product.getDefaultCurrency() + "', '"+
+                "VALUES ('" + product.getName() + "', '" +
+                product.getDefaultPrice() + "', '" +
+                product.getDefaultCurrency() + "', '" +
                 product.getDescription() + "', '" +
-                product.getProductCategory() + "', '"+
+                product.getProductCategory() + "', '" +
                 product.getSupplier() + "' );";
         try {
             Connection connection = DBConnection.getInstance().getConnection();
@@ -36,7 +39,28 @@ public class ProductDaoDB implements ProductDao {
 
     @Override
     public Product find(int id) {
-        return null;
+
+        String query = "SELECT * FROM products WHERE id='" + id + "';";
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+
+        ) {
+            while (resultSet.next()) {
+                ProductCategory productCategory = productCategoryDB.find(resultSet.getInt("categoryid"));
+                Supplier supplier = supplierDaoDB.find(resultSet.getInt(resultSet.getInt("supplierid")));
+                product = new Product(resultSet.getString("name"),
+                        Float.parseFloat(resultSet.getString("defaultprice")),
+                        resultSet.getString("currencystring"),
+                        resultSet.getString("description"),
+                        productCategory,
+                        supplier);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
     }
 
     @Override
