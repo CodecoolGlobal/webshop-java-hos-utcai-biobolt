@@ -30,6 +30,7 @@ public class SupplierDaoDB implements SupplierDao {
 
         try (Connection connection = DBConnection.getInstance().getConnection();
              Statement statement =connection.createStatement();
+
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
