@@ -15,17 +15,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDaoDB implements ProductDao {
+    private static ProductDaoDB INSTANCE;
+
+    SupplierDaoDB supplierDaoDB = SupplierDaoDB.getInstance();
     DBDao db = DBConnection.getInstance();
-    ProductCategoryDB productCategoryDB;
-    SupplierDaoDB supplierDaoDB;
+    ProductCategoryDB productCategoryDB = ProductCategoryDB.getInstance();
     Product product;
     List<Product> productList = new ArrayList<>();
+
+    private  ProductDaoDB(){}
+
+    public static ProductDaoDB getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new ProductDaoDB();
+        }
+
+        return INSTANCE;
+    }
 
     @Override
     public void add(Product product) {
 
-        Integer productCategoryId = productCategoryDB.find(product.getProductCategory().getId()).getId();
-        Integer supplierId = supplierDaoDB.find(product.getSupplier().getId()).getId();
+        int productCategoryId = productCategoryDB.find(product.getProductCategory().getId()).getId();
+        int supplierId = supplierDaoDB.find(product.getSupplier().getId()).getId();
 
 
         String query = "INSERT INTO products (name, defaultprice, currencystring, description, categoryid, supplierid) " +
@@ -38,7 +50,7 @@ public class ProductDaoDB implements ProductDao {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }

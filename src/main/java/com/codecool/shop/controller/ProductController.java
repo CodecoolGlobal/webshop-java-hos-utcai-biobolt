@@ -30,10 +30,10 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = new ProductDaoDB();
+        ProductDao productDataStore = ProductDaoDB.getInstance();
         CartDao cartDaoDataStore = CartDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = new ProductCategoryDB();
-        SupplierDao productSupplierDataStore = new SupplierDaoDB();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDB.getInstance();
+        SupplierDao productSupplierDataStore = SupplierDaoDB.getInstance();
 
         Map params = new HashMap<>();
 

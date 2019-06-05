@@ -9,8 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierDaoDB implements SupplierDao {
+    private static SupplierDaoDB INSTANCE;
+
     DBDao db = DBConnection.getInstance();
     Supplier supplier;
+
+    private  SupplierDaoDB(){}
+
+    public static SupplierDaoDB getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new SupplierDaoDB();
+        }
+
+        return INSTANCE;
+    }
 
     @Override
     public void add(Supplier supplier) {
@@ -18,7 +30,7 @@ public class SupplierDaoDB implements SupplierDao {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }

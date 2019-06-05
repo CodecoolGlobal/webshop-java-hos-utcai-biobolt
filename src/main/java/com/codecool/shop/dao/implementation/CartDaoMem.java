@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class CartDaoMem implements CartDao {
     private static CartDaoMem instance = null;
-    ProductDao productDataStore = new ProductDaoDB();
+    ProductDao productDataStore = ProductDaoDB.getInstance();
     private HashMap<Product, Integer> cartData = new LinkedHashMap<>();
 
     private CartDaoMem() {

@@ -19,10 +19,10 @@ public class Initializer implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-
-        ProductDao productDataStore = new ProductDaoDB();
-        ProductCategoryDao productCategoryDataStore = new ProductCategoryDB();
-        SupplierDao supplierDataStore = new SupplierDaoDB();
+        /*
+        ProductDao productDataStore = ProductDaoDB.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDB.getInstance();
+        SupplierDao supplierDataStore = SupplierDaoDB.getInstance();
         CartDao cartDao = CartDaoMem.getInstance();
 
         //setting up a new supplier
@@ -70,6 +70,6 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Glandula Pinealis", 675, "USD", "Real delicacy, straight from your brain cells", natural, escobar));
         productDataStore.add(new Product("Lighter Fluid", 8, "USD", "Light up the party!", reform, littleJohnny));
         productDataStore.add(new Product("Acetone", 8, "USD", "Beauty and pain goes hand in hand... Ease your constraint with some floral scented acetone.", reform, ilcsiNeni));
-        productDataStore.add(new Product("Kalumet", 345, "USD", "You'll feel like the children of nature after a few sips from this tribal beauty", starterPack, escobar));
+        productDataStore.add(new Product("Kalumet", 345, "USD", "You'll feel like the children of nature after a few sips from this tribal beauty", starterPack, escobar));*/
     }
 }

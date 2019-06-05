@@ -19,7 +19,7 @@ public class addToCart extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = new ProductDaoDB();
+        ProductDao productDataStore = ProductDaoDB.getInstance();
         CartDao cartDaoDataStore = CartDaoMem.getInstance();
 
         Integer addId = Integer.parseInt(req.getParameter("product_id"));

@@ -29,6 +29,9 @@ public class ProductDaoMem implements ProductDao {
 
     @Override
     public void add(Product product) {
+        if (product.getId()==0){
+            product.setId(data.size()+1);
+        }
         data.add(product);
     }
 

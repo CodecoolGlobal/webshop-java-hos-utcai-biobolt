@@ -30,7 +30,6 @@ public class DBConnection implements DBDao{
 
 
     public Connection getConnection() throws SQLException {
-        System.out.println(DB_PASSWORD);
         return DriverManager.getConnection(
                 DATABASE,
                 DB_USER,

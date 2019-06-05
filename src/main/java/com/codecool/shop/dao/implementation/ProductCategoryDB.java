@@ -13,8 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductCategoryDB implements ProductCategoryDao {
+    private static ProductCategoryDB INSTANCE;
+
     ProductCategory productCategory;
     DBConnection dbConnection = DBConnection.getInstance();
+
+    private ProductCategoryDB(){}
+
+    public static ProductCategoryDB getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new ProductCategoryDB();
+        }
+
+        return INSTANCE;
+    }
 
 
     @Override
@@ -24,7 +36,7 @@ public class ProductCategoryDB implements ProductCategoryDao {
         try {
             Connection connection = dbConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
 
         } catch (SQLException e) {
             e.printStackTrace();
