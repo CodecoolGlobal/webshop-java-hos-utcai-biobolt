@@ -23,13 +23,18 @@ public class ProductDaoDB implements ProductDao {
 
     @Override
     public void add(Product product) {
+
+        Integer productCategoryId = productCategoryDB.find(product.getProductCategory().getId()).getId();
+        Integer supplierId = supplierDaoDB.find(product.getSupplier().getId()).getId();
+
+
         String query = "INSERT INTO products (name, defaultprice, currencystring, description, categoryid, supplierid) " +
                 "VALUES ('" + product.getName() + "', '" +
                 product.getDefaultPrice() + "', '" +
                 product.getDefaultCurrency() + "', '" +
                 product.getDescription() + "', '" +
-                product.getProductCategory() + "', '" +
-                product.getSupplier() + "' );";
+                productCategoryId + "', '" +
+                supplierId + "' );";
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             Statement statement = connection.createStatement();
@@ -57,6 +62,7 @@ public class ProductDaoDB implements ProductDao {
                         resultSet.getString("description"),
                         productCategory,
                         supplier);
+                product.setId(resultSet.getInt("id"));
             }
 
         } catch (SQLException e) {
@@ -90,7 +96,9 @@ public class ProductDaoDB implements ProductDao {
             while (resultSet.next()){
                 Supplier supplier = supplierDaoDB.find(resultSet.getInt("supplierid"));
                 ProductCategory productCategory = productCategoryDB.find(resultSet.getInt("categoryid"));
-                productList.add(new Product(resultSet.getString("name"),
+                productList.add(new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         Float.parseFloat(resultSet.getString("defaultprice")),
                         resultSet.getString("currencystring"),
                         resultSet.getString("description"),
@@ -114,7 +122,9 @@ public class ProductDaoDB implements ProductDao {
         ){
             while (resultSet.next()){
                 ProductCategory productCategory = productCategoryDB.find(resultSet.getInt("categoryid"));
-                productList.add(new Product(resultSet.getString("name"),
+                productList.add(new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         Float.parseFloat(resultSet.getString("defaultprice")),
                         resultSet.getString("currencystring"),
                         resultSet.getString("description"),
@@ -139,7 +149,9 @@ public class ProductDaoDB implements ProductDao {
         ) {
             while (resultSet.next()) {
                 Supplier supplier = supplierDaoDB.find(resultSet.getInt(resultSet.getInt("supplierid")));
-                productList.add(new Product(resultSet.getString("name"),
+                productList.add(new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         Float.parseFloat(resultSet.getString("defaultprice")),
                         resultSet.getString("currencystring"),
                         resultSet.getString("description"),

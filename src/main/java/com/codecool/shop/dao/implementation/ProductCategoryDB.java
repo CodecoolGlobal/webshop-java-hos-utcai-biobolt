@@ -41,7 +41,12 @@ public class ProductCategoryDB implements ProductCategoryDao {
 
         ) {
             while (resultSet.next()) {
-                productCategory = new ProductCategory(resultSet.getString("name"), resultSet.getString("description"), resultSet.getString("department"));
+                productCategory = new ProductCategory(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        resultSet.getString("department"));
+
             }
 
         } catch (SQLException e) {
@@ -75,6 +80,7 @@ public class ProductCategoryDB implements ProductCategoryDao {
         ) {
             while (resultSet.next()) {
                 ProductCategory productCategory = new ProductCategory(resultSet.getString("name"), resultSet.getString("department"), resultSet.getString("description"));
+                productCategory.setId(resultSet.getInt("id"));
                 resultList.add(productCategory);
 
 

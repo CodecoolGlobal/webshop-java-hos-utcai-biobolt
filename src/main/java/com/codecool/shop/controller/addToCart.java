@@ -4,6 +4,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoDB;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ public class addToCart extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductDao productDataStore = new ProductDaoDB();
         CartDao cartDaoDataStore = CartDaoMem.getInstance();
 
         Integer addId = Integer.parseInt(req.getParameter("product_id"));

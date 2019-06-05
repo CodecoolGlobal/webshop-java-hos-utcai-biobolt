@@ -35,7 +35,7 @@ public class SupplierDaoDB implements SupplierDao {
         ){
             while (resultSet.next()){
                 supplier = new Supplier(resultSet.getString("name"), resultSet.getString("description"));
-
+                supplier.setId(resultSet.getInt("id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,7 +66,9 @@ public class SupplierDaoDB implements SupplierDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                Supplier supplier = new Supplier(resultSet.getString("name"),
+                Supplier supplier = new Supplier(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         resultSet.getString("description"));
                 resultList.add(supplier);
             }
