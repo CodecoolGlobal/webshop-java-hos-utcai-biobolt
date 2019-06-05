@@ -1,5 +1,6 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
@@ -7,12 +8,10 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
-import java.util.List;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -22,9 +21,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.Array;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -102,7 +102,11 @@ public class ProductController extends HttpServlet {
 
         context.setVariable("products", filteredProductsByAll);
         context.setVariable("suppliers", productSupplierDataStore.getAll());
-        context.setVariable("categories", productCategoryDataStore.getAll());
+        try {
+            context.setVariable("categories", productCategoryDataStore.getAll());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         context.setVariable("numberofcartitem", cartDaoDataStore.getCarDataSize());
         context.setVariables(params);
         engine.process("product/index.html", context, resp.getWriter());

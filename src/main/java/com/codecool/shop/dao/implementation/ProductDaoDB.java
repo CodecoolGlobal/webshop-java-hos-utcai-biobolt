@@ -24,11 +24,11 @@ public class ProductDaoDB implements ProductDao {
     @Override
     public void add(Product product) {
         String query = "INSERT INTO products (name, defaultprice, currencystring, description, categoryid, supplierid) " +
-                "VALUES ('"+ product.getName() +"', '"+
-                product.getDefaultPrice() +"', '" +
-                product.getDefaultCurrency() + "', '"+
+                "VALUES ('" + product.getName() + "', '" +
+                product.getDefaultPrice() + "', '" +
+                product.getDefaultCurrency() + "', '" +
                 product.getDescription() + "', '" +
-                product.getProductCategory() + "', '"+
+                product.getProductCategory() + "', '" +
                 product.getSupplier() + "' );";
         try {
             Connection connection = DBConnection.getInstance().getConnection();
@@ -41,7 +41,28 @@ public class ProductDaoDB implements ProductDao {
 
     @Override
     public Product find(int id) {
-        return null;
+
+        String query = "SELECT * FROM products WHERE id='" + id + "';";
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+
+        ) {
+            while (resultSet.next()) {
+                ProductCategory productCategory = productCategoryDB.find(resultSet.getInt("categoryid"));
+                Supplier supplier = supplierDaoDB.find(resultSet.getInt(resultSet.getInt("supplierid")));
+                product = new Product(resultSet.getString("name"),
+                        Float.parseFloat(resultSet.getString("defaultprice")),
+                        resultSet.getString("currencystring"),
+                        resultSet.getString("description"),
+                        productCategory,
+                        supplier);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
     }
 
     @Override
@@ -109,6 +130,28 @@ public class ProductDaoDB implements ProductDao {
 
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
-        return null;
+        productList.clear();
+        String query = "SELECT * FROM products WHERE categoryid='" + productCategory.getId() + "';";
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+
+        ) {
+            while (resultSet.next()) {
+                Supplier supplier = supplierDaoDB.find(resultSet.getInt(resultSet.getInt("supplierid")));
+                productList.add(new Product(resultSet.getString("name"),
+                        Float.parseFloat(resultSet.getString("defaultprice")),
+                        resultSet.getString("currencystring"),
+                        resultSet.getString("description"),
+                        productCategory,
+                        supplier));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList;
     }
+
 }
+
