@@ -8,13 +8,16 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 public class ProductDaoDB implements ProductDao {
     DBDao db = DBConnection.getInstance();
+    ProductCategoryDB productCategoryDB;
     Product product;
+    List<Product> productList;
 
     @Override
     public void add(Product product) {
@@ -60,7 +63,25 @@ public class ProductDaoDB implements ProductDao {
 
     @Override
     public List<Product> getBy(Supplier supplier) {
-        return null;
+        String query = "SELECT * FROM products WHERE supplierid ='" + supplier.getId() + "';";
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             Statement statement =connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+        ){
+            while (resultSet.next()){
+                ProductCategory productCategory = productCategoryDB.find(resultSet.getInt("categoryid"));
+                productList.add(new Product(resultSet.getString("name"),
+                        Float.parseFloat(resultSet.getString("defaultprice")),
+                        resultSet.getString("currencystring"),
+                        resultSet.getString("description"),
+                        productCategory,
+                        supplier));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList;
     }
 
     @Override
